@@ -12,6 +12,7 @@ Makefile.in
 *.la
 .deps/
 .libs/
+./build-aux
 ABOUT-NLS
 ChangeLog
 aclocal.m4

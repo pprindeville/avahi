@@ -23,7 +23,7 @@ AC_INIT([avahi],[0.7],[avahi (at) lists (dot) freedesktop (dot) org])
 AC_CONFIG_SRCDIR([avahi-core/server.c])
 AC_CONFIG_MACRO_DIR([common])
 AC_CONFIG_HEADERS([config.h])
-AM_INIT_AUTOMAKE([foreign 1.11 -Wall -Wno-portability silent-rules tar-pax])
+AM_INIT_AUTOMAKE([foreign 1.11 -Wall -Wno-portability silent-rules tar-pax subdir-objects])
 
 AC_SUBST(PACKAGE_URL, [http://avahi.org/])
 
@@ -144,7 +144,8 @@ AC_PROG_LIBTOOL
 
 AC_CACHE_CHECK([whether the C++ compiler works], [avahi_cv_sys_cxx_works], [
     AC_LANG_PUSH([C++])
-    AC_COMPILE_IFELSE([int main() { return 0; }], [avahi_cv_sys_cxx_works=yes],
+    AC_COMPILE_IFELSE([AC_LANG_SOURCE([int main() { return 0; }])],
+        [avahi_cv_sys_cxx_works=yes],
         [avahi_cv_sys_cxx_works=no])
     AC_LANG_POP([C++])
     ])
@@ -299,7 +300,7 @@ AM_CONDITIONAL(TARGET_FREEBSD, test x"$with_distro" = xfreebsd)
 AM_CONDITIONAL(TARGET_SLACKWARE, test x"$with_distro" = xslackware)
 
 test_gcc_flag() {
-    AC_LANG_CONFTEST([int main() {}])
+    AC_LANG_CONFTEST([AC_LANG_SOURCE([int main() {}])])
     $CC -c conftest.c $CFLAGS $@ > /dev/null 2> /dev/null
     ret=$?
     rm -f conftest.o
@@ -418,7 +419,8 @@ IT_PROG_INTLTOOL([0.35.0])
 GETTEXT_PACKAGE=avahi
 AC_SUBST([GETTEXT_PACKAGE])
 AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE],["$GETTEXT_PACKAGE"],[Gettext package])
-AM_GLIB_GNU_GETTEXT
+AM_GNU_GETTEXT_VERSION(0.19)
+AM_GNU_GETTEXT
 
 avahilocaledir='${prefix}/${DATADIRNAME}/locale'
 AC_SUBST(avahilocaledir)

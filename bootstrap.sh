@@ -17,6 +17,8 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
 # USA.
 
+test -d ./build-aux || mkdir build-aux
+
 FLAGS="--sysconfdir=/etc --localstatedir=/var --enable-tests --enable-compat-howl --enable-compat-libdns_sd"
 
 # Feel free to add your own custom flags in here -Lathiat
